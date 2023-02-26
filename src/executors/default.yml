@@ -1,0 +1,10 @@
+description: This is a sample executor using Docker and the CircleCI base image.
+docker:
+  - image: "cimg/base:<<parameters.tag>>"
+parameters:
+  tag:
+    default: "stable"
+    description: >
+      Pick a specific circleci/base image variant:
+      https://hub.docker.com/r/cimg/base/tags
+    type: string

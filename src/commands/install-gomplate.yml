@@ -1,0 +1,22 @@
+description: Uses curl to install the specified version of Gomplate
+
+parameters:
+  version:
+    type: string
+    default: "v3.11.4"
+    description: Version of Gomplate to install
+  os:
+    type: string
+    default: "linux"
+    description: Operating system to install Gomplate for
+  arch:
+    type: string
+    default: "amd64"
+    description: Architecture to install Gomplate for
+steps:
+  - run:
+      name: Install Gomplate
+      command:
+        curl -o /usr/local/bin/gomplate -sSL https://github.com/hairyhenderson/gomplate/releases/download/<< parameters.version >>/gomplate_<< parameters.os >>-<< parameters.arch >>
+        chmod 755 /usr/local/bin/gomplate
+        gomplate --help
