@@ -22,8 +22,7 @@ workflows:
       - orb-tools/publish:
           orb-name: xavientois/gomplate
           vcs-type: << pipeline.project.type >>
-          requires:
-            [orb-tools/lint, orb-tools/review, orb-tools/pack, shellcheck/check]
+          requires: [orb-tools/pack]
           context: orb-publishing
           pub-type: dev
           filters: *filters

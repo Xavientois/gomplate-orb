@@ -15,5 +15,5 @@ for CONTEXT in ${CONTEXTS?}; do
   ARGS+=("--context" "${CONTEXT}")
 done
 
-echo "Running \"gomplate ${ARGS[@]}\""
-gomplate ${ARGS[@]}
+printf "Running \"gomplate %s\"\n" "${ARGS[@]}"
+gomplate "${ARGS[@]}"
