@@ -7,6 +7,12 @@ filters: &filters
   tags:
     only: /.*/
 
+tag-filters: &tag-filters
+  branches:
+    ignore: /.*/
+  tags:
+    only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+
 jobs:
   command-tests:
     executor: gomplate/gomplate
@@ -35,7 +41,7 @@ workflows:
       - command-tests:
           filters: *filters
       - orb-tools/pack:
-          filters: *filters
+          filters: *tag-filters
       - orb-tools/publish:
           orb-name: xavientois/gomplate
           vcs-type: << pipeline.project.type >>
@@ -44,8 +50,4 @@ workflows:
             - orb-tools/pack
             - command-tests
           context: orb-publishing
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          filters: *tag-filters
