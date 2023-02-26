@@ -3,7 +3,7 @@ docker:
   - image: "hairyhenderson/gomplate:<<parameters.tag>>"
 parameters:
   tag:
-    default: stable-slim
+    default: stable-alpine
     description: >
       Pick a specific hairyhenderson/gomplate image variant:
       https://hub.docker.com/r/hairyhenderson/gomplate/tags
