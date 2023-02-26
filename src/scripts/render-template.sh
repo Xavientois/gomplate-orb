@@ -1,19 +1,19 @@
-#!/bin/bash
+#!/bin/sh
 
 # This script generates arguments for and runs the gomplate command to render the template
 
-ARGS=()
-ARGS+=("--config" "${GOMPLATE_CONFIG?}")
-ARGS+=("--file" "${TEMPLATE_FILE?}")
-ARGS+=("--out" "${OUTPUT_FILE?}")
+ARGS=""
+ARGS="${ARGS} --config ${GOMPLATE_CONFIG?}"
+ARGS="${ARGS} --file ${TEMPLATE_FILE?}"
+ARGS="${ARGS} --out ${OUTPUT_FILE?}"
 
 for DATASOURCE in ${DATASOURCES?}; do
-  ARGS+=("--datasource" "${DATASOURCE}")
+  ARGS="${ARGS} --datasource ${DATASOURCE}"
 done
 
 for CONTEXT in ${CONTEXTS?}; do
-  ARGS+=("--context" "${CONTEXT}")
+  ARGS="${ARGS} --context ${CONTEXT}"
 done
 
-printf "Running \"gomplate %s\"\n" "${ARGS[@]}"
-gomplate "${ARGS[@]}"
+echo "Running \"gomplate ${ARGS}\""
+gomplate ${ARGS}

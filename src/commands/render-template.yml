@@ -22,7 +22,7 @@ parameters:
 steps:
   - run:
       name: Render template
-      shell: /bin/bash -eo pipefail
+      shell: /bin/bash -e
       environment:
         GOMPLATE_CONFIG: << parameters.gomplate-config >>
         CONTEXTS: << parameters.contexts >>
