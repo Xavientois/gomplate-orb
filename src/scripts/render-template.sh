@@ -16,4 +16,5 @@ for CONTEXT in ${CONTEXTS?}; do
 done
 
 echo "Running \"gomplate ${ARGS}\""
+# shellcheck disable=SC2086
 gomplate ${ARGS}
