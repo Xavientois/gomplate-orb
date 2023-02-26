@@ -16,7 +16,8 @@ parameters:
 steps:
   - run:
       name: Install Gomplate
-      command:
-        curl -o /usr/local/bin/gomplate -sSL https://github.com/hairyhenderson/gomplate/releases/download/<< parameters.version >>/gomplate_<< parameters.os >>-<< parameters.arch >>
-        chmod 755 /usr/local/bin/gomplate
-        gomplate --help
+      environment:
+        VERSION: << parameters.version >>
+        OS: << parameters.os >>
+        ARCH: << parameters.arch >>
+      command: << include(scripts/install-gomplate.sh) >>
