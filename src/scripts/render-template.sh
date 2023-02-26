@@ -3,9 +3,12 @@
 # This script generates arguments for and runs the gomplate command to render the template
 
 ARGS=""
-ARGS="${ARGS} --config ${GOMPLATE_CONFIG?}"
-ARGS="${ARGS} --file ${TEMPLATE_FILE?}"
-ARGS="${ARGS} --out ${OUTPUT_FILE?}"
+ARGS="${ARGS} --file ${TEMPLATE_FILE:?}"
+ARGS="${ARGS} --out ${OUTPUT_FILE:?}"
+
+if [ -n "${GOMPLATE_CONFIG?}" ]; then
+  ARGS="${ARGS} --config ${GOMPLATE_CONFIG}"
+fi
 
 for DATASOURCE in ${DATASOURCES?}; do
   ARGS="${ARGS} --datasource ${DATASOURCE}"
