@@ -22,7 +22,6 @@ parameters:
 steps:
   - run:
       name: Render template
-      shell: /bin/bash -e
       environment:
         GOMPLATE_CONFIG: << parameters.gomplate-config >>
         CONTEXTS: << parameters.contexts >>
