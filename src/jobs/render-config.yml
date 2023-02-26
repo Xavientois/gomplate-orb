@@ -35,11 +35,10 @@ parameters:
       The domain of the CircleCI installation - defaults to circleci.com. (Only
       necessary for CircleCI Server users)
     type: string
-  parameters-file:
-    default: /tmp/pipeline-parameters.json
+  parameters:
+    default: "{}"
     description: >-
-      Path to a JSON file containing the parameters to pass to the continuation
-      pipeline
+      A JSON object or file path of parameters to pass to the continuation pipeline
     type: string
   install-gomplate:
     default: true
@@ -79,4 +78,4 @@ steps:
   - continuation/continue:
       circleci_domain: << parameters.circleci_domain >>
       configuration_path: << parameters.output-file >>
-      parameters: << parameters.parameters-file >>
+      parameters: << parameters.parameters >>
