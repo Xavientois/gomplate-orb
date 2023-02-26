@@ -1,6 +1,8 @@
 description: Render the provided template and run it as a dynamic config continuation pipeline
 
-executor: gomplate
+executor:
+  name: default
+  tag: << parameters.tag >>
 
 parameters:
   template-file:
@@ -39,9 +41,25 @@ parameters:
       Path to a JSON file containing the parameters to pass to the continuation
       pipeline
     type: string
+  install-gomplate:
+    default: true
+    description: >-
+      Whether to install gomplate or not. If you are using a custom executor
+      that already has gomplate installed, you can set this to false.
+    type: boolean
+  tag:
+    default: "stable"
+    description: >
+      Pick a specific circleci/base image variant:
+      https://hub.docker.com/r/cimg/base/tags
+    type: string
 
 steps:
   - checkout
+  - when:
+      condition: << parameters.install-gomplate >>
+      steps:
+        - install-gomplate
   - unless:
       condition: << parameters.workspace_path >>
       steps:
