@@ -3,7 +3,7 @@ version: 2.1
 description: >
   Sample orb description
   What will your orb allow users to accomplish?
-  Descriptions should be short, simple, and informative.
+  Descriptions should be short, simple, and informative
 
 # This information will be displayed in the orb registry and is not mandatory.
 display:
