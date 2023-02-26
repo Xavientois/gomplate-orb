@@ -21,7 +21,7 @@ jobs:
           output-file: test.txt
           contexts: Values.yaml
       - run:
-          name: "Check test template"
+          name: "Check test template output"
           command: |
             cat test.txt
             if [ "$(cat test.txt)" != "Hello, CircleCI!" ]; then

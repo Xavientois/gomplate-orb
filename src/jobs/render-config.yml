@@ -1,0 +1,59 @@
+description: Render the provided template and run it as a dynamic config continuation pipeline
+
+executor: gomplate
+
+parameters:
+  template-file:
+    type: string
+    default: ".circleci/continue_config.yml.tmpl"
+    description: Template file to render as continuation pipeline
+  output-file:
+    type: string
+    default: ".circleci/continue_config.yml"
+    description: Path to write the rendered template to
+  gomplate-config:
+    type: string
+    default: ""
+    description: Path to Gomplate config file
+  contexts:
+    type: string
+    default: ""
+    description: Space-separated list of Gomplate contexts. The format for each context corresponds to the format here https://docs.gomplate.ca/usage/#context-c
+  datasources:
+    type: string
+    default: ""
+    description: Space-separated list of Gomplate data sources. The format for each datasource corresponds to the format here https://docs.gomplate.ca/usage/#datasource-d
+  workspace_path:
+    default: ""
+    description: Path to attach the workspace to
+    type: string
+  circleci_domain:
+    default: circleci.com
+    description: >-
+      The domain of the CircleCI installation - defaults to circleci.com. (Only
+      necessary for CircleCI Server users)
+    type: string
+  parameters-file:
+    default: /tmp/pipeline-parameters.json
+    description: >-
+      Path to a JSON file containing the parameters to pass to the continuation
+      pipeline
+    type: string
+
+steps:
+  - checkout
+  - unless:
+      condition: << parameters.workspace_path >>
+      steps:
+        - attach_workspace:
+            at: << parameters.workspace_path >>
+  - render-template:
+      template-file: << parameters.template-file >>
+      output-file: << parameters.output-file >>
+      gomplate-config: << parameters.gomplate-config >>
+      contexts: << parameters.contexts >>
+      datasources: << parameters.datasources >>
+  - continuation/continue:
+      circleci_domain: << parameters.circleci_domain >>
+      configuration_path: << parameters.output-file >>
+      parameters: << parameters.parameters-file >>
