@@ -8,19 +8,30 @@ filters: &filters
     only: /.*/
 
 jobs:
-  # Create a job to test the commands of your orbs.
-  # You may want to add additional validation steps to ensure the commands are working as expected.
   command-tests:
-    docker:
-      - image: cimg/base:current
+    executor: gomplate/gomplate
     steps:
-      - checkout
-      # Run your orb's commands to validate them.
-      - gomplate/greet
+      - run:
+          name: "Generate test template"
+          command: |
+            echo "Hello, {{ .Values.name }}!" > test.txt.tmpl
+            echo "name: CircleCI" > Values.yaml
+      - gomplate/render-config:
+          template-file: test.txt.tmpl
+          output-file: test.txt
+          contexts: Values.yaml
+      - run:
+          name: "Check test template"
+          command: |
+            cat test.txt
+            if [ "$(cat test.txt)" != "Hello, CircleCI!" ]; then
+              echo "Test failed"
+              exit 1
+            fi
+
 workflows:
   test-deploy:
     jobs:
-      # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
       - command-tests:
           filters: *filters
       - orb-tools/pack:
@@ -38,5 +49,3 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-
-# VS Code Extension Version: 1.4.0

@@ -1,13 +1,14 @@
-description: >
-  Sample example description.
-# Provide a use-case based example for using this orb.
-# Everything in the `usage` section will be displayed in the orb registry.
-# Comments are not retained.
+description: This shows the example usage of the orb in order to generate a pipeline for dynamic config
+
 usage:
   version: 2.1
+  setup: true
   orbs:
-    <orb-name>: xaventois/gomplate@1.2.3
+    gomplate: xaventois/gomplate@1.2.3
   workflows:
     use-my-orb:
       jobs:
-        - xavientois/gomplate
+        - gomplate/render-config:
+            template-file: .circleci/continue_config.yml.tmpl
+            output-file: .circleci/continue_config.yml
+            contexts: .circleci/values.yaml
