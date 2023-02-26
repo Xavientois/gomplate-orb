@@ -65,7 +65,7 @@ steps:
       condition: << parameters.install-gomplate >>
       steps:
         - install-gomplate
-  - unless:
+  - when:
       condition: << parameters.workspace_path >>
       steps:
         - attach_workspace:
