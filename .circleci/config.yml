@@ -26,7 +26,7 @@ workflows:
           context: orb-publishing
           pub-type: dev
           filters: *filters
-      # Triggers the test-deploy workflow in the Orb Development Kit.
+      # Triggers the test-deploy workflow
       - orb-tools/continue:
           pipeline-number: << pipeline.number >>
           vcs-type: << pipeline.project.type >>

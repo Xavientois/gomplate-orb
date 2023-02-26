@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# This script generates arguments for and runs the gomplate command to render the template
+# This script generates arguments for the gomplate command to render the template and runs it
 
 ARGS=""
 ARGS="${ARGS} --file ${TEMPLATE_FILE:?}"
