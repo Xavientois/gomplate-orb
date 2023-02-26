@@ -9,7 +9,7 @@ filters: &filters
     only: /.*/
 
 workflows:
-  lint-pack:
+  validate-publish-dev-orb:
     jobs:
       - orb-tools/lint:
           filters: *filters
