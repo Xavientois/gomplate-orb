@@ -16,7 +16,7 @@ jobs:
           command: |
             echo "Hello, {{ .Values.name }}!" > test.txt.tmpl
             echo "name: CircleCI" > Values.yaml
-      - gomplate/render-config:
+      - gomplate/render:
           template-file: test.txt.tmpl
           output-file: test.txt
           contexts: Values.yaml
