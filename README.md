@@ -15,7 +15,7 @@ orbs:
 
 ## Examples
 
-#### `render-template` command
+### `render-template` command
 
 This command takes a template file and the input contexts/datasources and renders the template.
 
