@@ -9,7 +9,7 @@ filters: &filters
     only: /.*/
 
 workflows:
-  lint-pack:
+  validate-publish-dev-orb:
     jobs:
       - orb-tools/lint:
           filters: *filters
@@ -22,12 +22,11 @@ workflows:
       - orb-tools/publish:
           orb-name: xavientois/gomplate
           vcs-type: << pipeline.project.type >>
-          requires:
-            [orb-tools/lint, orb-tools/review, orb-tools/pack, shellcheck/check]
+          requires: [orb-tools/pack]
           context: orb-publishing
           pub-type: dev
           filters: *filters
-      # Triggers the test-deploy workflow in the Orb Development Kit.
+      # Triggers the test-deploy workflow
       - orb-tools/continue:
           pipeline-number: << pipeline.number >>
           vcs-type: << pipeline.project.type >>

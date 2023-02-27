@@ -1,0 +1,31 @@
+description: Renders the provided template and stores the output in the provided path
+
+parameters:
+  template-file:
+    type: string
+    description: Template file to render as continuation pipeline
+  output-file:
+    type: string
+    description: Path to write the rendered template to
+  gomplate-config:
+    type: string
+    default: ""
+    description: Path to Gomplate config file
+  contexts:
+    type: string
+    default: ""
+    description: Space-separated list of Gomplate contexts. The format for each context corresponds to the format here https://docs.gomplate.ca/usage/#context-c
+  datasources:
+    type: string
+    default: ""
+    description: Space-separated list of Gomplate data sources. The format for each datasource corresponds to the format here https://docs.gomplate.ca/usage/#datasource-d
+steps:
+  - run:
+      name: Render template
+      environment:
+        GOMPLATE_CONFIG: << parameters.gomplate-config >>
+        CONTEXTS: << parameters.contexts >>
+        DATASOURCES: << parameters.datasources >>
+        TEMPLATE_FILE: << parameters.template-file >>
+        OUTPUT_FILE: << parameters.output-file >>
+      command: << include(scripts/render-template.sh) >>

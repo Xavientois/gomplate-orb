@@ -1,0 +1,10 @@
+description: This is an executor that uses the Gomplate docker image to access the Gomplate tool
+docker:
+  - image: "hairyhenderson/gomplate:<<parameters.tag>>"
+parameters:
+  tag:
+    default: stable-alpine
+    description: >
+      Pick a specific hairyhenderson/gomplate image variant:
+      https://hub.docker.com/r/hairyhenderson/gomplate/tags
+    type: string

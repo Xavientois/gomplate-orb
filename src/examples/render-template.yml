@@ -1,0 +1,30 @@
+description: This shows the example usage of the orb in order to render an arbitrary template
+
+usage:
+  version: 2.1
+
+  orbs:
+    gomplate: xaventois/gomplate@1.2.3
+
+  jobs:
+    render-greeting:
+      executor: gomplate/gomplate
+      steps:
+        - run:
+            name: "Generate greeting template and input values"
+            command: |
+              echo "Hello, {{ .values.name }}!" > greet.txt.tmpl
+              echo "name: CircleCI" > values.yaml
+        - gomplate/render-template:
+            template-file: greet.txt.tmpl
+            output-file: greet.txt
+            contexts: values.yaml
+        - run:
+            name: "Output greeting"
+            command: |
+              cat test.txt
+
+  workflows:
+    greeting:
+      jobs:
+        - render-greeting

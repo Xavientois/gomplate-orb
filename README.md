@@ -1,34 +1,96 @@
-# Orb Template
+# Gomplate Orb
 
-<!---
-[![CircleCI Build Status](https://circleci.com/gh/<organization>/<project-name>.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/<organization>/<project-name>) [![CircleCI Orb Version](https://badges.circleci.com/orbs/<namespace>/<orb-name>.svg)](https://circleci.com/orbs/registry/orb/<namespace>/<orb-name>) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/<organization>/<project-name>/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
+[![CircleCI Build Status](https://circleci.com/gh/Xavientois/gomplate-orb.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/Xavientois/gomplate-orb) [![CircleCI Orb Version](https://badges.circleci.com/orbs/xavientois/gomplate.svg)](https://circleci.com/orbs/registry/orb/xavientois/gomplate) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/Xavientois/gomplate-orb/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
 
---->
+_**An orb to render Go templates in CircleCI using Gomplate**_
 
-A project template for Orbs.
+## Usage
 
-This repository is designed to be automatically ingested and modified by the CircleCI CLI's `orb init` command.
+In order to use this orb, just add it under the `orbs` section of your CircleCI `.circleci/config.yml`:
 
-_**Edit this area to include a custom title and description.**_
+```yaml
+orbs:
+    gomplate: xaventois/gomplate@1.2.3
+```
+
+## Examples
+
+### `render-template` command
+
+This command takes a template file and the input contexts/datasources and renders the template.
+
+```yaml
+version: 2.1
+
+orbs:
+    gomplate: xaventois/gomplate@0.1.0
+
+jobs:
+    render-greeting:
+        executor: gomplate/gomplate
+        steps:
+            - run:
+                name: "Generate greeting template and input values"
+                command: |
+                    echo "Hello, {{ .values.name }}!" > greet.txt.tmpl
+                    echo "name: CircleCI" > values.yaml
+            - gomplate/render-template:
+                template-file: greet.txt.tmpl
+                output-file: greet.txt
+                contexts: values.yaml
+            - run:
+                name: "Output greeting"
+                command: |
+                    cat test.txt
+
+workflows:
+    greeting:
+        jobs:
+            - render-greeting
+```
+
+### `render-config` job
+
+This job is designed to be used as part of a Dynamic Config setup workflow. It automatically calls the `continuation/continue` job upon rendering the template.
+
+```yaml
+version: 2.1
+setup: true
+
+orbs:
+    gomplate: xaventois/gomplate@0.1.0
+
+workflows:
+    use-my-orb:
+        jobs:
+            - gomplate/render-config:
+                template-file: .circleci/continue_config.yml.tmpl
+                output-file: .circleci/continue_config.yml
+                pre-steps:
+                    - run:
+                        command: |
+                            echo '{ "a": "b", list: ["x", "y", "z"] }' > values.yaml
+                contexts: values.yaml
+```
 
 ---
 
 ## Resources
 
-[CircleCI Orb Registry Page](https://circleci.com/orbs/registry/orb/<namespace>/<orb-name>) - The official registry page of this orb for all versions, executors, commands, and jobs described.
+[Documentation for this orb](https://circleci.com/orbs/registry/orb/xavientois/gomplate) - The official registry page of this orb for all versions, executors, commands, and jobs described.
 
 [CircleCI Orb Docs](https://circleci.com/docs/2.0/orb-intro/#section=configuration) - Docs for using, creating, and publishing CircleCI Orbs.
 
 ### How to Contribute
 
-We welcome [issues](https://github.com/<organization>/<project-name>/issues) to and [pull requests](https://github.com/<organization>/<project-name>/pulls) against this repository!
+We welcome [issues](https://github.com/Xavientois/gomplate-orb/issues) to and [pull requests](https://github.com/Xavientois/gomplate-orb/pulls) against this repository!
 
 ### How to Publish An Update
 1. Merge pull requests with desired changes to the main branch.
     - For the best experience, squash-and-merge and use [Conventional Commit Messages](https://conventionalcommits.org/).
 2. Find the current version of the orb.
-    - You can run `circleci orb info <namespace>/<orb-name> | grep "Latest"` to see the current version.
-3. Create a [new Release](https://github.com/<organization>/<project-name>/releases/new) on GitHub.
+    - You can run `circleci orb info xavientois/gomplate | grep "Latest"` to see the current version.
+3. Create a [new Release](https://github.com/Xavientois/gomplate-orb/releases/new) on GitHub.
     - Click "Choose a tag" and _create_ a new [semantically versioned](http://semver.org/) tag. (ex: v1.0.0)
       - We will have an opportunity to change this before we publish if needed after the next step.
 4.  Click _"+ Auto-generate release notes"_.
@@ -37,3 +99,7 @@ We welcome [issues](https://github.com/<organization>/<project-name>/issues) to 
 5. Now ensure the version tag selected is semantically accurate based on the changes included.
 6. Click _"Publish Release"_.
     - This will push a new tag and trigger your publishing pipeline on CircleCI.
+
+## Licence
+
+MIT
