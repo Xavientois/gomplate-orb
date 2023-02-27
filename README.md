@@ -23,7 +23,7 @@ This command takes a template file and the input contexts/datasources and render
 version: 2.1
 
 orbs:
-    gomplate: xaventois/gomplate@1.2.3
+    gomplate: xaventois/gomplate@0.1.0
 
 jobs:
     render-greeting:
@@ -58,7 +58,7 @@ version: 2.1
 setup: true
 
 orbs:
-    gomplate: xaventois/gomplate@1.2.3
+    gomplate: xaventois/gomplate@0.1.0
 
 workflows:
     use-my-orb:
