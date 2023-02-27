@@ -6,31 +6,44 @@ _**An orb to render Go templates in CircleCI using Gomplate**_
 
 ## Usage
 
+In order to use this orb, just add it under the `orbs` section of your CircleCI `.circleci/config.yml`:
+
+```yaml
+orbs:
+    gomplate: xaventois/gomplate@1.2.3
+```
+
+## Examples
+
+This orb provides different components depending on your use-case.
+
+### `render-config` job
+
 ```yaml
 version: 2.1
 setup: true
 
 orbs:
-gomplate: xaventois/gomplate@1.2.3
+    gomplate: xaventois/gomplate@1.2.3
 
 workflows:
-use-my-orb:
-    jobs:
-    - gomplate/render-config:
-        template-file: .circleci/continue_config.yml.tmpl
-        output-file: .circleci/continue_config.yml
-        pre-steps:
-            - run:
-                command: |
-                echo '{ "a": "b", list: ["x", "y", "z"] }' > values.yaml
-        contexts: values.yaml
+    use-my-orb:
+        jobs:
+            - gomplate/render-config:
+                template-file: .circleci/continue_config.yml.tmpl
+                output-file: .circleci/continue_config.yml
+                pre-steps:
+                    - run:
+                        command: |
+                            echo '{ "a": "b", list: ["x", "y", "z"] }' > values.yaml
+                contexts: values.yaml
 ```
 
 ---
 
 ## Resources
 
-[CircleCI Orb Registry Page](https://circleci.com/orbs/registry/orb/xavientois/gomplate) - The official registry page of this orb for all versions, executors, commands, and jobs described.
+[Documentation for this orb](https://circleci.com/orbs/registry/orb/xavientois/gomplate) - The official registry page of this orb for all versions, executors, commands, and jobs described.
 
 [CircleCI Orb Docs](https://circleci.com/docs/2.0/orb-intro/#section=configuration) - Docs for using, creating, and publishing CircleCI Orbs.
 
@@ -52,3 +65,7 @@ We welcome [issues](https://github.com/Xavientois/gomplate-orb/issues) to and [p
 5. Now ensure the version tag selected is semantically accurate based on the changes included.
 6. Click _"Publish Release"_.
     - This will push a new tag and trigger your publishing pipeline on CircleCI.
+
+## Licence
+
+MIT
