@@ -15,9 +15,43 @@ orbs:
 
 ## Examples
 
-This orb provides different components depending on your use-case.
+#### `render-template` command
+
+This command takes a template file and the input contexts/datasources and renders the template.
+
+```yaml
+version: 2.1
+
+orbs:
+    gomplate: xaventois/gomplate@1.2.3
+
+jobs:
+    render-greeting:
+        executor: gomplate/gomplate
+        steps:
+            - run:
+                name: "Generate greeting template and input values"
+                command: |
+                    echo "Hello, {{ .values.name }}!" > greet.txt.tmpl
+                    echo "name: CircleCI" > values.yaml
+            - gomplate/render-template:
+                template-file: greet.txt.tmpl
+                output-file: greet.txt
+                contexts: values.yaml
+            - run:
+                name: "Output greeting"
+                command: |
+                    cat test.txt
+
+workflows:
+    greeting:
+        jobs:
+            - render-greeting
+```
 
 ### `render-config` job
+
+This job is designed to be used as part of a Dynamic Config setup workflow. It automatically calls the `continuation/continue` job upon rendering the template.
 
 ```yaml
 version: 2.1
