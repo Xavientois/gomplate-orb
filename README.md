@@ -1,13 +1,30 @@
-# Orb Template
+# Gomplate Orb
 
-<!---
 [![CircleCI Build Status](https://circleci.com/gh/Xavientois/gomplate-orb.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/Xavientois/gomplate-orb) [![CircleCI Orb Version](https://badges.circleci.com/orbs/xavientois/gomplate.svg)](https://circleci.com/orbs/registry/orb/xavientois/gomplate) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/Xavientois/gomplate-orb/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
 
---->
+_**An orb to render Go templates in CircleCI using Gomplate**_
 
-_**Gomplate Orb**_
+## Usage
 
-An orb to render Go templates using Gomplate and store the output in a file.
+```yaml
+version: 2.1
+setup: true
+
+orbs:
+gomplate: xaventois/gomplate@1.2.3
+
+workflows:
+use-my-orb:
+    jobs:
+    - gomplate/render-config:
+        template-file: .circleci/continue_config.yml.tmpl
+        output-file: .circleci/continue_config.yml
+        pre-steps:
+            - run:
+                command: |
+                echo '{ "a": "b", list: ["x", "y", "z"] }' > values.yaml
+        contexts: values.yaml
+```
 
 ---
 
