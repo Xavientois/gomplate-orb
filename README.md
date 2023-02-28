@@ -2,7 +2,7 @@
 
 [![CircleCI Build Status](https://circleci.com/gh/Xavientois/gomplate-orb.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/Xavientois/gomplate-orb) [![CircleCI Orb Version](https://badges.circleci.com/orbs/xavientois/gomplate.svg)](https://circleci.com/orbs/registry/orb/xavientois/gomplate) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/Xavientois/gomplate-orb/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
 
-_**An orb to render Go templates in CircleCI using Gomplate**_
+_**An orb to render Go templates in CircleCI using [Gomplate](https://docs.gomplate.ca/)**_
 
 ## Usage
 
