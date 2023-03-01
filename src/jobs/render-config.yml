@@ -1,7 +1,7 @@
 description: Render the provided template and run it as a dynamic config continuation pipeline
 
 executor:
-  name: default
+  name: << parameters.executor-name >>
   tag: << parameters.tag >>
 
 parameters:
@@ -46,9 +46,14 @@ parameters:
       Whether to install gomplate or not. If you are using a custom executor
       that already has gomplate installed, you can set this to false.
     type: boolean
+  executor-name:
+    default: default
+    description: |
+      Pick a different executor name
   tag:
     default: "stable"
     description: >
+      Sets the tag for the executor docker image.
       Pick a specific circleci/base image variant:
       https://hub.docker.com/r/cimg/base/tags
     type: string
