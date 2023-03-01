@@ -48,6 +48,7 @@ parameters:
     type: boolean
   executor-name:
     default: default
+    key: string
     description: |
       Pick a different executor name
   tag:
