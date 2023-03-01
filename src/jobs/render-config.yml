@@ -45,9 +45,7 @@ parameters:
       that already has gomplate installed, you can set this to false.
     type: boolean
   executor:
-    default:
-      name: default
-      tag: stable 
+    default: default
     type: executor
     description: The executor to run the job
   resource_class:
